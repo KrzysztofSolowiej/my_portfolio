@@ -1,0 +1,153 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+    align-items: start;
+}
+
+.img-container {
+    width: 800px;
+    height: 600px;
+    overflow: hidden;
+    padding-left: 3em;
+    padding-top: 2em;
+}
+
+.img-container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.img-container-two {
+    width: 1000px;
+    height: 800px;
+    overflow: hidden;
+    padding-left: 0em;
+    padding-top: 15px;
+}
+
+.img-container-two img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+
+.card {
+    width: 45rem;
+    height: 60rem;
+    background-color: rgba(148, 177, 233, 0.897);
+    border-radius: 6%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+
+.aboutText {
+    /* font-family: 'Urbanist'; */
+    font-size: 175%;
+    font-weight: 300;
+    padding: 10px 30px 1px;
+    padding-top: 3em;
+    color: azure;
+    z-index: 10;
+}
+
+
+
+.contacts {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+.contact-card {
+    flex-basis: 225px;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 13px;
+    padding-bottom: 20px;
+
+    background-color: white;
+}
+
+.contact-card>img {
+    width: 100%;
+    height: auto;
+    align-self: center;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.contact-card>h3 {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.info-group {
+    display: flex;
+    align-items: center;
+}
+
+.info-group>img {
+    height: 11px;
+    margin-right: 8px;
+}
+
+.info-group>p {
+    margin-block: 3px;
+    font-size: 12px;
+    color: #2B283A;
+}
+
+.form-control-range {
+    transform: translateY(3.5px);
+    width: 10%;
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 5px;
+    outline: none;
+    margin: 5px 0;
+}
+
+
+.form-control-range::-moz-range-thumb {
+    transform: translateY(0px);
+    width: 10px;
+    height: 18px;
+    background-color: #87898b;
+    cursor: pointer;
+    border-radius: 30%;
+}
+
+.carousel {
+    overflow: hidden;
+}
+
+.inner {
+    white-space: nowrap;
+    transition: transform 0.3s;
+}
