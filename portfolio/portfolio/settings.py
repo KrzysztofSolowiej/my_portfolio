@@ -9,25 +9,37 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+environ.Env.read_env(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+ENV = os.environ.get("ENV")
+env = environ.Env(
+    DEBUG=(bool, False),
+)
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#y!qs@n5(lhhyivyy6uelln@r+6gq3yp5yl9(!*^hi5-6!+$vn'
-
+SECRET_KEY = env('SECRET_KEY')
+# SECRET_KEY = os.environ.get(
+#     "SECRET_KEY", default="django-insecure-#y!qs@n5(lhhyivyy6uelln@r+6gq3yp5yl9(!*^hi5-6!+$vn"
+# )
+# SECRET_KEY = 'django-insecure-#y!qs@n5(lhhyivyy6uelln@r+6gq3yp5yl9(!*^hi5-6!+$vn'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = False if ENV == "PROD" else True
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
+DEBUG = env('DEBUG')
 
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = os.environ.get(
+#     "DJANGO_ALLOWED_HOSTS", default="*,twilight-sunset-3018.fly.dev").split(",")
+
+CSRF_TRUSTED_ORIGINS = ['*']
 
 # Application definition
 
@@ -42,17 +54,18 @@ INSTALLED_APPS = [
     'frontend.apps.FrontendConfig',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'portfolio.urls'
@@ -78,6 +91,7 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
 
 DATABASES = {
     'default': {
@@ -124,8 +138,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins
+CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be sent with requests

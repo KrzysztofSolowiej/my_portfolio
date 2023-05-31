@@ -1,3 +1,9 @@
 half.csv
 rest.csv
 sqlite3.exe
+.env
+fly.toml
+.git/
+Dockerfile
+staticfiles/
+.dockerignore

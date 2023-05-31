@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from "react-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
-import HomePage from "./HomePage";
+import MyRouter from "./Router";
 import Footer from "./Footer";
 import '../../static/css/index.css';
 import Nav from 'react-bootstrap/Nav';
@@ -35,7 +35,7 @@ function App() {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div><HomePage /></div>
+            <div><MyRouter /></div>
             <div>
                 <Footer />
             </div>

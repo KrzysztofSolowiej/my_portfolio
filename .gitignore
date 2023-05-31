@@ -1,1 +1,6 @@
 .ipynb_checkpoints
+dane.csv
+docker-compose.yaml
+post_backup.txt
+nginx.conf
+.vscode

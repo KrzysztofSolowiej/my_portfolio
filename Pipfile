@@ -31,6 +31,9 @@ ipython = "*"
 pandas = "==1.3.5"
 django-cors-headers = "*"
 scikit-learn = "*"
+gunicorn = "==20.1.0"
+python-dotenv = "*"
+django-environ = "==0.9.0"
 
 [dev-packages]
 autopep8 = "*"

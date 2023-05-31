@@ -10,6 +10,7 @@ from django.db import transaction
 from django.db.models import Avg
 import os
 import io
+import requests
 import base64
 import json
 import joblib
@@ -24,7 +25,7 @@ matplotlib.use('Agg')
 
 # Create your views here.
 
-
+@csrf_exempt
 def detect_shapes(request, picture_id):
 
     from . mrcnn_defs import MaskRCNN, Config
@@ -56,7 +57,17 @@ def detect_shapes(request, picture_id):
     picture = Picture.objects.get(pk=picture_id)
     request_data = json.loads(request.body.decode('utf-8'))
     min_score = float(request_data.get('min_score', 0.5))
-    image = skimage.io.imread(picture.link)
+    image_url = picture.link
+    image_filename = os.path.basename(image_url)
+    image_path = os.path.join(os.getcwd(), image_filename)
+    response = requests.get(image_url)
+    if response.status_code == 200:
+        with open(image_path, 'wb') as image_file:
+            image_file.write(response.content)
+
+    # image = skimage.io.imread(picture.link)
+    image = skimage.io.imread(image_path)
+
     try:
         img_array = np.array(image)
     except TypeError:
@@ -73,7 +84,7 @@ def detect_shapes(request, picture_id):
 
     # Save processed image to buffer
     save_fig_path = os.path.join(
-        os.path.dirname(__file__), '../frontend/static/images/saved_img.png')
+        os.path.dirname(__file__), './saved_img.png')
     total_pixels = img_array.shape[0] * img_array.shape[1]
     display_instances(img_array, results['rois'], results['masks'], results['class_ids'],
                       class_names, results['scores'], save_fig_path=save_fig_path, min_score=float(min_score))
@@ -139,10 +150,10 @@ def detect_shapes(request, picture_id):
             max_horizontal_pixels, max_vertical_pixels, region_surface), fontsize=9)
 
         plt.savefig(os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), '../frontend/static/images/analyze.png'))
+            os.path.abspath(__file__)), './analyze.png'))
 
         analyze_fig_path = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), '../frontend/static/images/analyze.png')
+            os.path.abspath(__file__)), './analyze.png')
 
         analize_img = Image.open(analyze_fig_path)
         buffer = io.BytesIO()
@@ -158,6 +169,7 @@ def detect_shapes(request, picture_id):
                 'detected_image': detected_image,
                 'num_shapes': num_shapes,
                 'analyze_images': analyze_images}
+    os.remove(image_path)
 
     return JsonResponse(response)
 

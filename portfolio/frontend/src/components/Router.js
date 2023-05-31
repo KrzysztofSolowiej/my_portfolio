@@ -15,7 +15,7 @@ import {
     Redirect,
 } from "react-router-dom";
 
-export default class HomePage extends Component {
+export default class MyRouter extends Component {
     constructor(props) {
         super(props);
     }

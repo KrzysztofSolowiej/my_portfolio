@@ -7,14 +7,14 @@ export default class RothkoAboutPost extends React.Component {
 
     componentDidMount() {
         axios
-            .get('http://127.0.0.1:8000/api/post/6')
+            .get('http://localhost:8000/api/post/6')
             .then((res) => {
                 const data = res.data;
                 this.setState({
                     details: data,
                 });
             })
-            .catch((err) => { });
+            .catch(error => console.error(error));
     }
 
     render() {
